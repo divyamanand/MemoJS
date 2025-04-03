@@ -1,13 +1,15 @@
 
+import { ModeToggle } from './components/mode-toggle'
 import ListRevisions from './queries/ListRevisions'
-import Revision from './structures/Revision'
+import { ThemeProvider } from "@/components/theme-provider"
 
 function App() {
 
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ModeToggle/>
       <ListRevisions/>
-    </>
+    </ThemeProvider>
   )
 }
 
