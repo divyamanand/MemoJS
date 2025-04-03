@@ -51,7 +51,7 @@ const qTodayRevisions = `
     WHERE 
         r.revision_date = CURRENT_DATE 
     ORDER BY 
-        r.revision_date;
+        r.id;
 `;
 
 
