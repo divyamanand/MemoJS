@@ -11,7 +11,7 @@ const ListRevisions = () => {
           return axios.post("http://localhost:8000/mark-revisions", {ids: markRevisions})
       },
 
-      onSuccess: (data, variables, context) => {
+      onSuccess: () => {
         queryClient.invalidateQueries(["revisions"])
       },
 
