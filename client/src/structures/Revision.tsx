@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 
 import React from "react";
+import { Link } from "lucide-react";
 
 export interface Props {
   handleChecks: () => void;
@@ -16,6 +17,8 @@ export interface Props {
   questionName: string;
   questionTags: string;
   revisionDate: string;
+  lastRevision: string;
+  questionLink: string;
 }
 
 const Revision: React.FC<Props> = ({
@@ -25,19 +28,31 @@ const Revision: React.FC<Props> = ({
   questionName = "Your Question Name",
   questionTags = "GFG",
   revisionDate = "04 Apr 2025",
+  lastRevision = "04 Apr 2025",
+  questionLink = "",
 }) => {
   return (
-    <Card className="w-full max-w-md shadow-md p-2 gap-1">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-lg font-semibold">{questionName}</CardTitle>
-        <Checkbox checked={!!isChecked} id={revisionId.toString()} onCheckedChange={handleChecks} />
-      </CardHeader>
-      <CardFooter className="flex flex-row items-start text-sm text-gray-500 gap-2">
+    <Card className="w-full max-w-md shadow-md p-2 gap-1 px-3">
+    <CardHeader className="flex flex-row items-center justify-between px-0">
+      <CardTitle className="text-lg font-semibold px-0">{questionName}</CardTitle>
+      <Checkbox
+        checked={!!isChecked}
+        id={revisionId.toString()}
+        onCheckedChange={handleChecks}
+        className="hover:cursor-pointer px-0"
+      />
+    </CardHeader>
+    <CardFooter className="flex items-center justify-start gap-2 text-sm text-gray-500 px-0">
         <Badge variant={"secondary"}>{questionTags}</Badge>
         <Badge variant={"secondary"}>{revisionDate}</Badge>
-        <Badge variant={"secondary"}>{revisionId}</Badge>
-      </CardFooter>
-    </Card>
+        <Badge variant={"secondary"}>{lastRevision}</Badge>
+
+      <a href={questionLink} target="_blank">
+      <Link size={13}/>
+      </a> 
+    </CardFooter>
+  </Card>
+  
   );
 };
 

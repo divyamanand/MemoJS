@@ -1,5 +1,5 @@
 const qListQuestions = `
-    SELECT q.id, q.question, q.tags, q.difficulty
+    SELECT q.id, q.question, q.tags, q.difficulty, q.last_revised
     FROM questions q
     WHERE q.added_on::DATE = CURRENT_DATE
     ORDER BY q.added_on DESC;
@@ -7,8 +7,8 @@ const qListQuestions = `
 
 const qUpdateRevisions = `
     UPDATE revisions
-    SET revision_date = $1
-    WHERE revision_date < $2 AND completed = FALSE;
+    SET revision_date = CURRENT_DATE
+    WHERE revision_date < CURRENT_DATE AND completed = FALSE;
 `
 
 const qQuestionExists = `
@@ -42,18 +42,17 @@ const qTodayRevisions = `
         q.question, 
         q.tags, 
         r.revision_date, 
-        r.completed 
+        r.completed,
+        q.last_revised
     FROM 
         questions q
     JOIN 
         revisions r ON q.id = r.question_id
     WHERE 
-        r.revision_date <= CURRENT_DATE 
-        AND r.completed = FALSE
+        r.revision_date = CURRENT_DATE 
     ORDER BY 
         r.revision_date;
 `;
-
 
 
 const qUpcomingRevisions = `
@@ -65,9 +64,8 @@ const qUpcomingRevisions = `
 
 const qMarkRevisionDone = `
     UPDATE revisions 
-    SET completed = TRUE 
-    WHERE id = $1
-    AND completed = FALSE 
+    SET completed = NOT completed
+    WHERE id = $1 
     AND revision_date <= CURRENT_DATE
     RETURNING id, revision_date, completed;
 `

@@ -4,7 +4,7 @@ const {Pool} = pkg
 
 
 const types = pg.types
-types.setTypeParser(1114, (stringValue) => stringValue)
+types.setTypeParser(1114, (stringValue) => stringValue.substring(0,10))
 
 const revision = new Pool({
     database: 'revision',

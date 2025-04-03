@@ -6,16 +6,15 @@ const ListRevisions = () => {
 
     const queryClient = useQueryClient()
 
-    const mutation = useMutation({
+    const mutation = useMutation<number[], Error, number[]>({
       mutationFn: (markRevisions: number[]) => {
-          return axios.post("http://localhost:8000/mark-revisions", {ids: markRevisions})
+        return axios.post("http://localhost:8000/mark-revisions", { ids: markRevisions });
       },
-
       onSuccess: () => {
-        queryClient.invalidateQueries(["revisions"])
-      },
-
-  })
+        queryClient.invalidateQueries({ queryKey: ["revisions"] }); // Correct way
+      }
+    });
+    
 
     const {isPending, error, data} = useQuery({
         queryKey: ['revisions'],
@@ -32,7 +31,11 @@ const ListRevisions = () => {
     <>
     <h3>{data?.response?.length} Questions</h3>
     <ul>
-        {data.response.map((ques: {revision_id: number; question: string; tags: string; revision_date: string; completed: boolean}) => (
+        {data.response.map((ques: 
+        {revision_id: number; question: string; 
+          tags: string; revision_date: string; 
+          completed: boolean; last_revised: string; 
+          link: string;}) => (
           <li key={ques.revision_id}>
             <Revision 
             isChecked={ques.completed}
@@ -40,7 +43,9 @@ const ListRevisions = () => {
             handleChecks={() => mutation.mutate([ques.revision_id])}
             questionName={ques.question} 
             questionTags={ques.tags} 
-            revisionDate={ques.revision_date}/>
+            revisionDate={ques.revision_date}
+            lastRevision={ques.last_revised || "None"}
+            questionLink={ques.link}/>
           </li>
         ))}
     </ul>
