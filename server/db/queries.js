@@ -1,5 +1,5 @@
 const qListQuestions = `
-    SELECT q.id, q.question, q.tags, q.difficulty, q.last_revised
+    SELECT q.id, q.question, q.tags, q.difficulty, q.last_revised, q.link
     FROM questions q
     WHERE q.added_on::DATE = CURRENT_DATE
     ORDER BY q.added_on DESC;
@@ -18,9 +18,9 @@ const qQuestionExists = `
 `
 
 const qAddQuestion = `
-    INSERT INTO questions (question, difficulty, tags)
-    VALUES ($1, $2, $3)
-    RETURNING id, question, added_on;
+    INSERT INTO questions (question, difficulty, tags, link)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id, question, link, added_on;
 
 `
 

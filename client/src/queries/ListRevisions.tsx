@@ -33,8 +33,8 @@ const ListRevisions = () => {
     <ul>
         {data.response.map((ques: 
         {revision_id: number; question: string; 
-          tags: string; revision_date: string; 
-          completed: boolean; last_revised: string; 
+          tags: string; last_revised: string; 
+          completed: boolean; 
           link: string;}) => (
           <li key={ques.revision_id}>
             <Revision 
@@ -43,7 +43,6 @@ const ListRevisions = () => {
             handleChecks={() => mutation.mutate([ques.revision_id])}
             questionName={ques.question} 
             questionTags={ques.tags} 
-            revisionDate={ques.revision_date}
             lastRevision={ques.last_revised || "None"}
             questionLink={ques.link}/>
           </li>

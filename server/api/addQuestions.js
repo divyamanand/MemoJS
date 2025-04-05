@@ -30,7 +30,7 @@ const addQuestions = async (req, res) => {
     try {
         const quests = [];
         for (const quest of questions) {
-            const { question, difficulty, tags } = quest;
+            const { question, difficulty, tags, link } = quest;
             if (!question || !difficulty) {
                 return res.status(400).send(`Incomplete Question Info: ${JSON.stringify(quest)}`);
             }
@@ -44,7 +44,7 @@ const addQuestions = async (req, res) => {
             const tagsString = Array.isArray(tags) ? tags.join(",") : tags;
 
             // Insert new question
-            const insertResult = await revision.query(qAddQuestion, [question, difficulty, tagsString]);
+            const insertResult = await revision.query(qAddQuestion, [question, difficulty, tagsString, link]);
             const { id, added_on } = insertResult.rows[0];
 
             // Insert revisions
