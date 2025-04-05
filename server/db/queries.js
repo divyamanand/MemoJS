@@ -13,7 +13,7 @@ const qUpdateRevisions = `
 
 const qQuestionExists = `
     SELECT EXISTS (
-    SELECT 1 FROM questions WHERE LOWER(question) = LOWER($1)
+    SELECT 1 FROM questions WHERE LOWER(link) = LOWER($1)
     )
 `
 
@@ -43,7 +43,8 @@ const qTodayRevisions = `
         q.tags, 
         r.revision_date, 
         r.completed,
-        q.last_revised
+        q.last_revised,
+        q.link
     FROM 
         questions q
     JOIN 

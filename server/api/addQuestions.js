@@ -36,7 +36,7 @@ const addQuestions = async (req, res) => {
             }
 
             // Check if the question already exists
-            const checkResult = await revision.query(qQuestionExists, [question]);
+            const checkResult = await revision.query(qQuestionExists, [link]);
             const exists = checkResult.rows[0]?.exists;
             if (exists) continue;
 

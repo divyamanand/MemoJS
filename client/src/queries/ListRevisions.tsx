@@ -23,7 +23,7 @@ const ListRevisions = () => {
             .then((res) => res.json()
             .catch((err) => console.log(err)))
     })
-
+    console.log(data)
     if  (isPending) return "Loading"
     if (error) return "An error has been occured" + error.message
 

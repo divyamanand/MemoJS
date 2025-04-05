@@ -30,8 +30,8 @@ const Revision: React.FC<Props> = ({
   questionLink = "",
 }) => {
   return (
-    <Card className={`w-full max-w-md shadow-md p-2 gap-1 px-3 my-2 mx-2
-    ${isChecked? "outline-card-background outline-1" : null}`}>
+    <Card className={`w-full max-w-md shadow-md p-2 gap-2 px-3 my-2 mx-2
+    ${isChecked ? "shadow-[4px_4px_10px_rgba(10,138,24,0.92)] transition-shadow" : null}`}>
     <CardHeader className="flex flex-row items-center justify-between px-0">
       <CardTitle className="text-lg font-semibold px-0">{questionName}</CardTitle>
       <Checkbox
