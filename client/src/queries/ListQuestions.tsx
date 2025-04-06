@@ -1,36 +1,43 @@
 import Question from "@/structures/Question"
-import { useQuery} from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 const ListQuestions = () => {
+  const { isPending, error, data } = useQuery({
+    queryKey: ['questions'],
+    queryFn: () =>
+      fetch("http://localhost:8000/list-questions")
+        .then((res) => res.json())
+        .catch((err) => console.log(err))
+  });
 
-    const {isPending, error, data} = useQuery({
-        queryKey: ['questions'],
-        queryFn: () => 
-            fetch("http://localhost:8000/list-questions")
-            .then((res) => res.json()
-            .catch((err) => console.log(err)))
-    })
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
-    if  (isPending) return "Loading"
-    if (error) return "An error has been occured" + error.message
   return (
-    <>
-    <h3>{data?.response?.length} Questions</h3>
-    <ul>
-        {data.response.map((ques: 
-        {id: number; question: string; 
-          tags: string; last_revised: string; link: string;}) => (
-          <li key={ques.id}>
-            <Question 
-            questionName={ques.question} 
-            questionTags={ques.tags} 
-            lastRevision={ques.last_revised || "None"}
-            questionLink={ques.link}/>
-          </li>
+    <div className="px-6 py-4">
+      <h3 className="text-xl font-semibold mb-4">{data?.response?.length} Questions</h3>
+
+      {/* Masonry grid layout */}
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+        {data.response.map((ques: {
+          id: number;
+          question: string;
+          tags: string;
+          last_revised: string;
+          link: string;
+        }) => (
+          <div key={ques.id} className="break-inside-avoid">
+            <Question
+              questionName={ques.question}
+              questionTags={ques.tags}
+              lastRevision={ques.last_revised || "None"}
+              questionLink={ques.link}
+            />
+          </div>
         ))}
-    </ul>
-    </>
-  )
+      </div>
+    </div>
+  );
 }
 
-export default ListQuestions
+export default ListQuestions;

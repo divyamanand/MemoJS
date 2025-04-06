@@ -1,55 +1,59 @@
-import { useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
-import axios from "axios"
-import Revision from "../structures/Revision"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import Revision from "../structures/Revision";
 
 const ListRevisions = () => {
+  const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient()
+  const mutation = useMutation<number[], Error, number[]>({
+    mutationFn: (markRevisions: number[]) => {
+      return axios.post("http://localhost:8000/mark-revisions", { ids: markRevisions });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["revisions"] });
+    },
+  });
 
-    const mutation = useMutation<number[], Error, number[]>({
-      mutationFn: (markRevisions: number[]) => {
-        return axios.post("http://localhost:8000/mark-revisions", { ids: markRevisions });
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["revisions"] }); // Correct way
-      }
-    });
-    
+  const { isPending, error, data } = useQuery({
+    queryKey: ["revisions"],
+    queryFn: () =>
+      fetch("http://localhost:8000/list-revisions")
+        .then((res) => res.json())
+        .catch((err) => console.log(err)),
+  });
 
-    const {isPending, error, data} = useQuery({
-        queryKey: ['revisions'],
-        queryFn: () => 
-            fetch("http://localhost:8000/list-revisions")
-            .then((res) => res.json()
-            .catch((err) => console.log(err)))
-    })
-    console.log(data)
-    if  (isPending) return "Loading"
-    if (error) return "An error has been occured" + error.message
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
   return (
-    <>
-    <h3>{data?.response?.length} Questions</h3>
-    <ul>
-        {data.response.map((ques: 
-        {revision_id: number; question: string; 
-          tags: string; last_revised: string; 
-          completed: boolean; 
-          link: string;}) => (
-          <li key={ques.revision_id}>
-            <Revision 
-            isChecked={ques.completed}
-            revisionId={ques.revision_id}
-            handleChecks={() => mutation.mutate([ques.revision_id])}
-            questionName={ques.question} 
-            questionTags={ques.tags} 
-            lastRevision={ques.last_revised || "None"}
-            questionLink={ques.link}/>
-          </li>
-        ))}
-    </ul>
-    </>
-  )
-}
+    <div className="px-6 py-4">
+      <h3 className="text-xl font-semibold mb-4">{data?.response?.length} Questions</h3>
 
-export default ListRevisions
+      {/* Pinterest-style masonry layout */}
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+        {data.response.map((ques: {
+          revision_id: number;
+          question: string;
+          tags: string;
+          last_revised: string;
+          completed: boolean;
+          link: string;
+        }) => (
+          <div key={ques.revision_id} className="break-inside-avoid">
+            <Revision
+              isChecked={ques.completed}
+              revisionId={ques.revision_id}
+              handleChecks={() => mutation.mutate([ques.revision_id])}
+              questionName={ques.question}
+              questionTags={ques.tags}
+              lastRevision={ques.last_revised || "None"}
+              questionLink={ques.link}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ListRevisions;

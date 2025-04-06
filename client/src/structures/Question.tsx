@@ -23,7 +23,11 @@ const Question: React.FC<Props> = ({
   questionLink = "",
 }) => {
   return (
-    <Card className={`w-full max-w-md shadow-md p-2 gap-2 px-3 my-2 mx-2`}>
+    <Card className="w-full backdrop-blur-md border 
+    border-border bg-background/70 
+    rounded-2xl p-4 transition-all 
+    hover:shadow-md hover:border-primary/40 
+    hover:scale-[1.01]" >
     <CardHeader className="flex flex-row items-center justify-between px-0">
       <CardTitle className="text-lg font-semibold px-0">{questionName}</CardTitle>
     </CardHeader>

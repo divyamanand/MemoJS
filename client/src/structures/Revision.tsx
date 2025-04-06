@@ -30,16 +30,16 @@ const Revision: React.FC<Props> = ({
 }) => {
   return (
     <Card
-    className={`
-      w-[25%] max-w-md backdrop-blur-md border border-border bg-background/80
-      rounded-2xl px-4 py-3 my-3
-      transition-all hover:shadow-lg hover:border-primary/40 hover:scale-[1.01]
-      ${isChecked 
-        ? "ring-1 ring-green-500 shadow-[4px_4px_10px_rgba(10,138,24,0.92)] transition-shadow" 
-        : "shadow-[2px_2px_10px_rgba(0,0,0,0.08)]"}
-    `}
+  className={`
+    w-full backdrop-blur-sm border border-border bg-background/70
+    rounded-2xl p-4 transition-all
+    hover:shadow-lg hover:border-primary/40 hover:scale-[1.01]
+    ${isChecked 
+      ? "ring-1 ring-green-400 shadow-[0_4px_12px_rgba(34,197,94,0.3)]" 
+      : "shadow-sm"}
+  `}
+>
 
-    >
       <CardHeader className="flex flex-row justify-between items-start p-0">
         <div className="space-y-2">
           <CardTitle className="text-base font-semibold leading-snug tracking-tight text-foreground">

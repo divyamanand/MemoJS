@@ -41,7 +41,7 @@ function App() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Revisions */}
-          <Card className="h-3/4">
+          <Card className="h-full">
           <CardHeader className="flex flex-row justify-between items-center">
             <div>
               <CardTitle>Revisions</CardTitle>
@@ -56,7 +56,7 @@ function App() {
           </Card>
 
           {/* Questions */}
-          <Card className="h-3/4">
+          <Card className="h-full">
           <CardHeader className="flex flex-row justify-between items-center">
             <div>
               <CardTitle>Questions</CardTitle>
