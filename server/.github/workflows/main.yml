@@ -4,35 +4,36 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'server/**'
 
 jobs:
-  deploy:
+  build-and-deploy:
     name: Deploy to Elastic Beanstalk
-    runs-on: ubuntu-latest
+    runs-on: [ ubuntu-latest ]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Source
+        uses: actions/checkout@v4
 
-      - name: Set up Python (for EB CLI)
-        uses: actions/setup-python@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.11'
+          node-version: '22'
 
-      - name: Install AWS Elastic Beanstalk CLI
-        run: |
-          pip install awsebcli
+      - name: Install Dependecies
+        run: npm install
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Generate Deployment Package
+        run: zip -r nodejs-app-build.zip .
+      
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v22
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: your-aws-region  # e.g., us-east-1
-
-      - name: Deploy to Elastic Beanstalk
-        working-directory: ./server  # Adjust if your backend lives elsewhere
-        run: |
-          eb init memojs --platform node.js --region your-aws-region
-          eb use your-env-name
-          eb deploy
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: "MemoJS"
+          environment_name: "MemoJS-env"
+          version_label: ${{github.sha}}
+          region: ap-south-1
+          deployment_package: nodejs-app-build.zip
