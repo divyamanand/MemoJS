@@ -31,11 +31,11 @@ const Revision: React.FC<Props> = ({
   return (
     <Card
     className={`
-      w-full max-w-md backdrop-blur-md border border-border bg-background/80
+      w-[25%] max-w-md backdrop-blur-md border border-border bg-background/80
       rounded-2xl px-4 py-3 my-3
       transition-all hover:shadow-lg hover:border-primary/40 hover:scale-[1.01]
       ${isChecked 
-        ? "ring-2 ring-green-500 shadow-[6px_6px_20px_rgba(16,185,129,0.4)]" 
+        ? "ring-1 ring-green-500 shadow-[4px_4px_10px_rgba(10,138,24,0.92)] transition-shadow" 
         : "shadow-[2px_2px_10px_rgba(0,0,0,0.08)]"}
     `}
 
