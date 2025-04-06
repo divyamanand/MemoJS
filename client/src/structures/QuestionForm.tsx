@@ -4,11 +4,22 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
-import { useState } from "react"
+import { ReactElement, useState } from "react"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+export interface DialogProp {
+  trigger: ReactElement
+}
 
 
-const QuestionForm = () => {
-    
+const QuestionForm : React.FC<DialogProp> = ({trigger}) => {
 
   const [quest, setQuest] = useState({question: "", difficulty: "", tags: "", link: ""})
 
@@ -26,7 +37,12 @@ const QuestionForm = () => {
 })
   
   return (
-    <>
+    <Dialog>
+      <DialogTrigger>{trigger}</DialogTrigger>
+      <DialogContent>
+      <DialogHeader>
+      <DialogTitle>Add a question broo!</DialogTitle>
+    </DialogHeader>
         <form onSubmit={handleSubmit}>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="question">Question</Label>
@@ -54,7 +70,8 @@ const QuestionForm = () => {
         </div>
         <Button type="submit">Submit</Button>
         </form>
-    </>
+      </DialogContent>
+    </Dialog>
   )
 }
 
