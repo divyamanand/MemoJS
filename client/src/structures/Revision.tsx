@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "../components/ui/checkbox";
 import {
   Card,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -31,27 +30,40 @@ const Revision: React.FC<Props> = ({
 }) => {
   return (
     <Card
-      className={`
-        w-full max-w-md backdrop-blur-lg border border-border bg-background/80
-        rounded-3xl shadow-md p-4 my-4 transition-all
-        hover:shadow-xl hover:border-primary/60
-        hover:scale-[1.02]
-        ${isChecked ? "ring-2 ring-green-500" : ""}
-      `}
+    className={`
+      w-full max-w-md backdrop-blur-md border border-border bg-background/80
+      rounded-2xl px-4 py-3 my-3
+      transition-all hover:shadow-lg hover:border-primary/40 hover:scale-[1.01]
+      ${isChecked 
+        ? "ring-2 ring-green-500 shadow-[6px_6px_20px_rgba(16,185,129,0.4)]" 
+        : "shadow-[2px_2px_10px_rgba(0,0,0,0.08)]"}
+    `}
+
     >
-      {/* Header */}
-      <CardHeader className="flex flex-row justify-between items-start gap-3 p-0">
-        <div className="space-y-1">
-          <CardTitle className="text-lg font-bold leading-tight tracking-tight text-foreground">
+      <CardHeader className="flex flex-row justify-between items-start p-0">
+        <div className="space-y-2">
+          <CardTitle className="text-base font-semibold leading-snug tracking-tight text-foreground">
             {questionName}
           </CardTitle>
-          <div className="flex flex-wrap gap-2 mt-2">
-            <Badge variant="outline" className="text-xs px-2 py-1 rounded-full bg-muted/60">
+
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <Badge variant="outline" className="rounded-full bg-muted/60 px-2 py-[2px]">
               {questionTags}
             </Badge>
-            <Badge variant="secondary" className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
-              Revised: {lastRevision}
+            <Badge variant="secondary" className="rounded-full px-2 py-[2px]">
+              {lastRevision}
             </Badge>
+
+            {questionLink && (
+              <a
+                href={questionLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                <LinkIcon size={16} className="ml-1 inline-block align-middle" />
+              </a>
+            )}
           </div>
         </div>
 
@@ -59,23 +71,9 @@ const Revision: React.FC<Props> = ({
           checked={!!isChecked}
           id={revisionId.toString()}
           onCheckedChange={handleChecks}
-          className="mt-2 scale-125 hover:scale-130 transition-transform"
+          className="mt-1 scale-110 hover:scale-115 transition-transform"
         />
       </CardHeader>
-
-      {/* Footer */}
-      <CardFooter className="flex justify-end pt-3 px-0">
-        {questionLink && (
-          <a
-            href={questionLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors hover:scale-110"
-          >
-            <LinkIcon size={18} />
-          </a>
-        )}
-      </CardFooter>
     </Card>
   );
 };
