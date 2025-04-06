@@ -71,7 +71,7 @@ const Revision: React.FC<Props> = ({
           checked={!!isChecked}
           id={revisionId.toString()}
           onCheckedChange={handleChecks}
-          className="mt-1 scale-110 hover:scale-115 transition-transform"
+          className="mt-1 scale-110 hover:scale-115 transition-transform hover:cursor-pointer"
         />
       </CardHeader>
     </Card>

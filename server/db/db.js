@@ -6,7 +6,6 @@ import 'dotenv/config';
 
 const { Pool } = pg;
 
-const connectionString = process.env.DATABASE_URL;
 
 pg.types.setTypeParser(1114, (stringValue) => stringValue.substring(0, 10));
 

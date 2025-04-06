@@ -1,3 +1,5 @@
+
+import "dotenv/config"
 import express from "express"
 import cors from "cors"
 import { listQuestions } from "./api/listQuestions.js"
@@ -8,7 +10,7 @@ import { markRevisions } from "./api/markRevisions.js"
 
 
 const app = express()
-const port = 8000
+const port = process.env.PORT || 8000
 
 app.use(cors({origin: true, credentials: true}))
 app.use(express.json())
