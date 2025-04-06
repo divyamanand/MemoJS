@@ -7,6 +7,8 @@ import FormTrigger from "./structures/FormTrigger"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from './components/ui/button'
+import { RefreshCcw } from "lucide-react"
+
 
 function App() {
   return (
@@ -32,10 +34,14 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Revisions */}
           <Card className="h-3/4">
-            <CardHeader>
+          <CardHeader className="flex flex-row justify-between items-center">
+            <div>
               <CardTitle>Revisions</CardTitle>
               <CardDescription>Latest attempts and history</CardDescription>
-            </CardHeader>
+            </div>
+            <RefreshCcw className="h-5 w-5 cursor-pointer text-muted-foreground hover:text-foreground transition" />
+          </CardHeader>
+
             <CardContent className="overflow-y-auto custom-scroll max-h-screen">
               <ListRevisions />
             </CardContent>
@@ -43,13 +49,17 @@ function App() {
 
           {/* Questions */}
           <Card className="h-3/4">
-            <CardHeader className="flex flex-row justify-between items-center">
-              <div>
-                <CardTitle>Questions</CardTitle>
-                <CardDescription>Submitted questions list</CardDescription>
-              </div>
+          <CardHeader className="flex flex-row justify-between items-center">
+            <div>
+              <CardTitle>Questions</CardTitle>
+              <CardDescription>Submitted questions list</CardDescription>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RefreshCcw className="h-5 w-5 cursor-pointer text-muted-foreground hover:text-foreground transition" />
               <QuestionForm trigger={<FormTrigger />} />
-            </CardHeader>
+            </div>
+          </CardHeader>
+
             <CardContent className="overflow-y-auto custom-scroll max-h-[400px]">
               <ListQuestions />
             </CardContent>
