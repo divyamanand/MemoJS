@@ -1,18 +1,25 @@
-import pkg from "pg"
-import pg from "pg"
-const {Pool} = pkg
+// db.js
 
+import pg from "pg";
+import postgres from "postgres";
+import 'dotenv/config';
 
-const types = pg.types
-types.setTypeParser(1114, (stringValue) => stringValue.substring(0,10))
+const { Pool } = pg;
+
+const connectionString = process.env.DATABASE_URL;
+
+pg.types.setTypeParser(1114, (stringValue) => stringValue.substring(0, 10));
 
 const revision = new Pool({
-    database: 'revision',
-    user: 'postgres', 
-    password: '7698',  
-    host: 'localhost',
-    port: 5432
-})
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false 
+  }
+});
 
+const sql = postgres(connectionString, {
+  ssl: 'require' 
+});
 
-export {revision}
+export default sql;
+export { revision };
