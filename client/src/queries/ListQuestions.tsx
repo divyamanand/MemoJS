@@ -5,7 +5,7 @@ const ListQuestions = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ['questions'],
     queryFn: () =>
-      fetch("http://localhost:8000/list-questions")
+      fetch("/list-questions")
         .then((res) => res.json())
         .catch((err) => console.log(err))
   });

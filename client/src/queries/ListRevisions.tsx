@@ -7,7 +7,7 @@ const ListRevisions = () => {
 
   const mutation = useMutation<number[], Error, number[]>({
     mutationFn: (markRevisions: number[]) => {
-      return axios.post("http://localhost:8000/mark-revisions", { ids: markRevisions });
+      return axios.post("/mark-revisions", { ids: markRevisions });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["revisions"] });
@@ -17,7 +17,7 @@ const ListRevisions = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["revisions"],
     queryFn: () =>
-      fetch("http://localhost:8000/list-revisions")
+      fetch("/list-revisions")
         .then((res) => res.json())
         .catch((err) => console.log(err)),
   });
