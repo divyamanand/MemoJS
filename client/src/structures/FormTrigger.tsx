@@ -1,12 +1,15 @@
-import { Plus} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { PlusCircle } from 'lucide-react'
 
 const FormTrigger = () => {
   return (
-    <div className="fixed top-4 right-4 z-50">
-      <button className='rounded-full bg-primary p-3'>
-        <Plus size={30} className='text-accent-foreground'/>
-      </button>
-    </div>
+    <Button
+      variant="default"
+      className="flex items-center gap-2 px-4 py-2 rounded-md"
+    >
+      <PlusCircle size={20} />
+      <span className="text-sm font-medium">Add Question</span>
+    </Button>
   )
 }
 
