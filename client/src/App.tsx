@@ -6,6 +6,7 @@ import ListQuestions from './queries/ListQuestions'
 import FormTrigger from "./structures/FormTrigger"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from './components/ui/button'
 
 function App() {
   return (
@@ -20,7 +21,10 @@ function App() {
               Add and manage coding questions with ease.
             </p>
           </div>
+          <div className="flex items-center space-x-2">
+          <Button variant="outline">Login</Button>
           <ModeToggle />
+        </div>
         </div>
 
         <Separator className="my-4" />
